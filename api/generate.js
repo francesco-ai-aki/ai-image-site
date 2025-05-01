@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'dall-e-2',
+        model: 'dall-e-2',   // ✅ modello più leggero
         prompt,
         n: 1,
         size: '1024x1024'
@@ -31,6 +31,7 @@ export default async function handler(req, res) {
     } else {
       res.status(500).json({ error: 'Image generation failed', details: data });
     }
+
   } catch (error) {
     res.status(500).json({ error: 'Internal server error', details: error.message });
   }
