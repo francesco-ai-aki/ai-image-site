@@ -1,1 +1,35 @@
-<!DOCTYPE html><html><head><title>AI Image Site</title></head><body><h1>Benvenuto! Il sito funziona ✅</h1></body></html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Image Generator</title>
+</head>
+<body>
+  <h1>Genera un'immagine con ChatGPT 🎨</h1>
+  <form id="imageForm">
+    <input type="text" id="prompt" placeholder="Scrivi qui il prompt..." required>
+    <button type="submit">Genera immagine</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById('imageForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const prompt = document.getElementById('prompt').value;
+
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await response.json();
+      const img = document.createElement('img');
+      img.src = data.url;
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('result').appendChild(img);
+    });
+  </script>
+</body>
+</html>
